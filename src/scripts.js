@@ -183,3 +183,9 @@ function makeStepStreakHTML(id, activityInfo, userStorage, method) {
 }
 
 startApp();
+
+
+
+// we need to make sure that startApp() method is on window.addEventListener function,
+//it looks like its randomizing user on page load and also, assigning new instances of the class with hardcoded data,
+// whre we will be passing fetched data. Line: 51-69
