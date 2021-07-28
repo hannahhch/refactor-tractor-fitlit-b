@@ -5,12 +5,10 @@ import Hydration from '../src/Hydration';
 import UserRepo from '../src/User-repo';
 import User from '../src/User';
 import {
-  activityData,
-  hydrationData,
-  sleepData
+  hydrationData
 } from '../src/data/sampleData';
 import {
-  userData,
+  userData
 } from '../src/data/users.js';
 
 describe.only('Hydration', () => {
