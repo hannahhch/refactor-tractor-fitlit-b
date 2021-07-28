@@ -11,7 +11,7 @@ import {
   userData
 } from '../src/data/users.js';
 
-describe.only('Hydration', () => {
+describe('Hydration', () => {
   let hydration;
 
   beforeEach(() => {
