@@ -1,16 +1,18 @@
-import { expect } from 'chai';
+import {
+  expect
+} from 'chai';
 
 import UserRepo from '../src/User-repo';
 import User from '../src/User';
 
 
-describe('User Repo', function() {
+describe.only('User Repo', function() {
   let user1;
   let user2;
-  let user;
+  let users;
   let userRepo;
 
-  beforeEach(function() {
+  beforeEach(() => {
     user1 = new User({
       id: 1,
       name: "Alex Roth",
@@ -57,8 +59,6 @@ describe('User Repo', function() {
     const users = [user1];
     const userRepo = new UserRepo(users);
 
-    console.log('here: ', userRepo.users[0]);
-
     expect(userRepo.users[0].id).to.equal(1);
   });
 
@@ -69,6 +69,8 @@ describe('User Repo', function() {
 
     expect(userRepo.getDataFromID(1)).to.eql(user1);
   });
+
+  // Nina working on 👇
 
   it('should return the average of all users step goals', function() {
 
@@ -89,7 +91,7 @@ describe('User Repo', function() {
     let hydrationData;
     let sleepData;
 
-    beforeEach(function() {
+    beforeEach(() => {
       user1 = new User({
         id: 1,
         name: "Alex Roth",
@@ -140,340 +142,340 @@ describe('User Repo', function() {
       userRepo = new UserRepo(users);
 
       hydrationData = [{
-        "userID": 1,
-        "date": "2019/06/15",
-        "numOunces": 37
-      },
-      {
-        "userID": 2,
-        "date": "2019/06/15",
-        "numOunces": 38
-      },
-      {
-        "userID": 3,
-        "date": "2019/05/09",
-        "numOunces": 1
-      },
-      {
-        "userID": 4,
-        "date": "2019/04/15",
-        "numOunces": 36
-      },
-      {
-        "userID": 2,
-        "date": "2018/10/23",
-        "numOunces": 34
-      },
-      {
-        "userID": 1,
-        "date": "2018/06/16",
-        "numOunces": 39
-      },
-      {
-        "userID": 3,
-        "date": "2018/03/30",
-        "numOunces": 2
-      },
-      {
-        "userID": 4,
-        "date": "2018/02/01",
-        "numOunces": 28
-      },
-      {
-        "userID": 1,
-        "date": "2016/08/22",
-        "numOunces": 30
-      },
-      {
-        "userID": 3,
-        "date": "2016/05/14",
-        "numOunces": 3
-      },
-      {
-        "userID": 2,
-        "date": "2016/04/27",
-        "numOunces": 40
-      },
-      {
-        "userID": 4,
-        "date": "2019/03/15",
-        "numOunces": 35
-      },
-      {
-        "userID": 4,
-        "date": "2019/09/20",
-        "numOunces": 40
-      },
-      {
-        "userID": 4,
-        "date": "2019/09/19",
-        "numOunces": 30
-      },
-      {
-        "userID": 4,
-        "date": "2019/09/18",
-        "numOunces": 40
-      },
-      {
-        "userID": 4,
-        "date": "2019/09/17",
-        "numOunces": 40
-      },
-      {
-        "userID": 4,
-        "date": "2019/09/16",
-        "numOunces": 30
-      },
-      {
-        "userID": 4,
-        "date": "2019/09/15",
-        "numOunces": 30
-      },
-      {
-        "userID": 3,
-        "date": "2019/09/17",
-        "numOunces": 30
-      }
+          "userID": 1,
+          "date": "2019/06/15",
+          "numOunces": 37
+        },
+        {
+          "userID": 2,
+          "date": "2019/06/15",
+          "numOunces": 38
+        },
+        {
+          "userID": 3,
+          "date": "2019/05/09",
+          "numOunces": 1
+        },
+        {
+          "userID": 4,
+          "date": "2019/04/15",
+          "numOunces": 36
+        },
+        {
+          "userID": 2,
+          "date": "2018/10/23",
+          "numOunces": 34
+        },
+        {
+          "userID": 1,
+          "date": "2018/06/16",
+          "numOunces": 39
+        },
+        {
+          "userID": 3,
+          "date": "2018/03/30",
+          "numOunces": 2
+        },
+        {
+          "userID": 4,
+          "date": "2018/02/01",
+          "numOunces": 28
+        },
+        {
+          "userID": 1,
+          "date": "2016/08/22",
+          "numOunces": 30
+        },
+        {
+          "userID": 3,
+          "date": "2016/05/14",
+          "numOunces": 3
+        },
+        {
+          "userID": 2,
+          "date": "2016/04/27",
+          "numOunces": 40
+        },
+        {
+          "userID": 4,
+          "date": "2019/03/15",
+          "numOunces": 35
+        },
+        {
+          "userID": 4,
+          "date": "2019/09/20",
+          "numOunces": 40
+        },
+        {
+          "userID": 4,
+          "date": "2019/09/19",
+          "numOunces": 30
+        },
+        {
+          "userID": 4,
+          "date": "2019/09/18",
+          "numOunces": 40
+        },
+        {
+          "userID": 4,
+          "date": "2019/09/17",
+          "numOunces": 40
+        },
+        {
+          "userID": 4,
+          "date": "2019/09/16",
+          "numOunces": 30
+        },
+        {
+          "userID": 4,
+          "date": "2019/09/15",
+          "numOunces": 30
+        },
+        {
+          "userID": 3,
+          "date": "2019/09/17",
+          "numOunces": 30
+        }
       ]
 
       sleepData = [{
-        "userID": 1,
-        "date": "2017/06/15",
-        "hoursSlept": 6.1,
-        "sleepQuality": 2.2
-      },
-      {
-        "userID": 2,
-        "date": "2017/06/15",
-        "hoursSlept": 7,
-        "sleepQuality": 4.7
-      },
-      {
-        "userID": 3,
-        "date": "2017/06/15",
-        "hoursSlept": 2,
-        "sleepQuality": 3
-      },
-      {
-        "userID": 4,
-        "date": "2017/06/15",
-        "hoursSlept": 5.4,
-        "sleepQuality": 3
-      },
-      {
-        "userID": 1,
-        "date": "2018/07/15",
-        "hoursSlept": 4.1,
-        "sleepQuality": 3.6
-      },
-      {
-        "userID": 2,
-        "date": "2018/07/15",
-        "hoursSlept": 9.6,
-        "sleepQuality": 2.9
-      },
-      {
-        "userID": 3,
-        "date": "2018/07/15",
-        "hoursSlept": 2,
-        "sleepQuality": 3
-      },
-      {
-        "userID": 4,
-        "date": "2018/07/23",
-        "hoursSlept": 8.1,
-        "sleepQuality": 3.5
-      },
-      {
-        "userID": 1,
-        "date": "2019/05/30",
-        "hoursSlept": 8.9,
-        "sleepQuality": 2.2
-      },
-      {
-        "userID": 2,
-        "date": "2019/05/30",
-        "hoursSlept": 4.4,
-        "sleepQuality": 1.6
-      },
-      {
-        "userID": 3,
-        "date": "2019/05/30",
-        "hoursSlept": 4,
-        "sleepQuality": 1
-      },
-      {
-        "userID": 4,
-        "date": "2019/05/30",
-        "hoursSlept": 8,
-        "sleepQuality": 3.4
-      },
-      {
-        "userID": 1,
-        "date": "2019/08/22",
-        "hoursSlept": 10.1,
-        "sleepQuality": 1.8
-      },
-      {
-        "userID": 2,
-        "date": "2019/08/22",
-        "hoursSlept": 6.9,
-        "sleepQuality": 1.2
-      },
-      {
-        "userID": 3,
-        "date": "2019/08/22",
-        "hoursSlept": 4,
-        "sleepQuality": 1
-      },
-      {
-        "userID": 4,
-        "date": "2019/06/21",
-        "hoursSlept": 6.1,
-        "sleepQuality": 3.5
-      },
-      {
-        "userID": 4,
-        "date": "2019/06/20",
-        "hoursSlept": 4.7,
-        "sleepQuality": 4
-      },
-      {
-        "userID": 4,
-        "date": "2019/06/19",
-        "hoursSlept": 10.1,
-        "sleepQuality": 1.3
-      },
-      {
-        "userID": 4,
-        "date": "2019/06/18",
-        "hoursSlept": 7.9,
-        "sleepQuality": 1.6
-      },
-      {
-        "userID": 4,
-        "date": "2019/06/17",
-        "hoursSlept": 5.9,
-        "sleepQuality": 1.6
-      },
-      {
-        "userID": 4,
-        "date": "2019/06/16",
-        "hoursSlept": 9.6,
-        "sleepQuality": 1
-      },
-      {
-        "userID": 4,
-        "date": "2019/06/15",
-        "hoursSlept": 9,
-        "sleepQuality": 3.1
-      },
-      {
-        "userID": 2,
-        "date": "2019/06/21",
-        "hoursSlept": 6.1,
-        "sleepQuality": 3.5
-      },
-      {
-        "userID": 2,
-        "date": "2019/06/20",
-        "hoursSlept": 4.7,
-        "sleepQuality": 4
-      },
-      {
-        "userID": 2,
-        "date": "2019/06/19",
-        "hoursSlept": 10.1,
-        "sleepQuality": 3.3
-      },
-      {
-        "userID": 2,
-        "date": "2019/06/18",
-        "hoursSlept": 7.9,
-        "sleepQuality": 3.6
-      },
-      {
-        "userID": 2,
-        "date": "2019/06/17",
-        "hoursSlept": 5.9,
-        "sleepQuality": 3.6
-      },
-      {
-        "userID": 2,
-        "date": "2019/06/16",
-        "hoursSlept": 9.6,
-        "sleepQuality": 4
-      },
-      {
-        "userID": 2,
-        "date": "2019/06/15",
-        "hoursSlept": 9,
-        "sleepQuality": 3.1
-      },
-      {
-        "userID": 5,
-        "date": "2019/06/21",
-        "hoursSlept": 9,
-        "sleepQuality": 4
-      },
-      {
-        "userID": 5,
-        "date": "2019/06/20",
-        "hoursSlept": 8,
-        "sleepQuality": 4
-      },
-      {
-        "userID": 5,
-        "date": "2019/06/19",
-        "hoursSlept": 10,
-        "sleepQuality": 4
-      },
-      {
-        "userID": 5,
-        "date": "2019/06/18",
-        "hoursSlept": 9,
-        "sleepQuality": 4
-      },
-      {
-        "userID": 5,
-        "date": "2019/06/17",
-        "hoursSlept": 8,
-        "sleepQuality": 4
-      },
-      {
-        "userID": 5,
-        "date": "2019/06/16",
-        "hoursSlept": 10,
-        "sleepQuality": 4
-      },
-      {
-        "userID": 5,
-        "date": "2019/06/15",
-        "hoursSlept": 9,
-        "sleepQuality": 4
-      }
+          "userID": 1,
+          "date": "2017/06/15",
+          "hoursSlept": 6.1,
+          "sleepQuality": 2.2
+        },
+        {
+          "userID": 2,
+          "date": "2017/06/15",
+          "hoursSlept": 7,
+          "sleepQuality": 4.7
+        },
+        {
+          "userID": 3,
+          "date": "2017/06/15",
+          "hoursSlept": 2,
+          "sleepQuality": 3
+        },
+        {
+          "userID": 4,
+          "date": "2017/06/15",
+          "hoursSlept": 5.4,
+          "sleepQuality": 3
+        },
+        {
+          "userID": 1,
+          "date": "2018/07/15",
+          "hoursSlept": 4.1,
+          "sleepQuality": 3.6
+        },
+        {
+          "userID": 2,
+          "date": "2018/07/15",
+          "hoursSlept": 9.6,
+          "sleepQuality": 2.9
+        },
+        {
+          "userID": 3,
+          "date": "2018/07/15",
+          "hoursSlept": 2,
+          "sleepQuality": 3
+        },
+        {
+          "userID": 4,
+          "date": "2018/07/23",
+          "hoursSlept": 8.1,
+          "sleepQuality": 3.5
+        },
+        {
+          "userID": 1,
+          "date": "2019/05/30",
+          "hoursSlept": 8.9,
+          "sleepQuality": 2.2
+        },
+        {
+          "userID": 2,
+          "date": "2019/05/30",
+          "hoursSlept": 4.4,
+          "sleepQuality": 1.6
+        },
+        {
+          "userID": 3,
+          "date": "2019/05/30",
+          "hoursSlept": 4,
+          "sleepQuality": 1
+        },
+        {
+          "userID": 4,
+          "date": "2019/05/30",
+          "hoursSlept": 8,
+          "sleepQuality": 3.4
+        },
+        {
+          "userID": 1,
+          "date": "2019/08/22",
+          "hoursSlept": 10.1,
+          "sleepQuality": 1.8
+        },
+        {
+          "userID": 2,
+          "date": "2019/08/22",
+          "hoursSlept": 6.9,
+          "sleepQuality": 1.2
+        },
+        {
+          "userID": 3,
+          "date": "2019/08/22",
+          "hoursSlept": 4,
+          "sleepQuality": 1
+        },
+        {
+          "userID": 4,
+          "date": "2019/06/21",
+          "hoursSlept": 6.1,
+          "sleepQuality": 3.5
+        },
+        {
+          "userID": 4,
+          "date": "2019/06/20",
+          "hoursSlept": 4.7,
+          "sleepQuality": 4
+        },
+        {
+          "userID": 4,
+          "date": "2019/06/19",
+          "hoursSlept": 10.1,
+          "sleepQuality": 1.3
+        },
+        {
+          "userID": 4,
+          "date": "2019/06/18",
+          "hoursSlept": 7.9,
+          "sleepQuality": 1.6
+        },
+        {
+          "userID": 4,
+          "date": "2019/06/17",
+          "hoursSlept": 5.9,
+          "sleepQuality": 1.6
+        },
+        {
+          "userID": 4,
+          "date": "2019/06/16",
+          "hoursSlept": 9.6,
+          "sleepQuality": 1
+        },
+        {
+          "userID": 4,
+          "date": "2019/06/15",
+          "hoursSlept": 9,
+          "sleepQuality": 3.1
+        },
+        {
+          "userID": 2,
+          "date": "2019/06/21",
+          "hoursSlept": 6.1,
+          "sleepQuality": 3.5
+        },
+        {
+          "userID": 2,
+          "date": "2019/06/20",
+          "hoursSlept": 4.7,
+          "sleepQuality": 4
+        },
+        {
+          "userID": 2,
+          "date": "2019/06/19",
+          "hoursSlept": 10.1,
+          "sleepQuality": 3.3
+        },
+        {
+          "userID": 2,
+          "date": "2019/06/18",
+          "hoursSlept": 7.9,
+          "sleepQuality": 3.6
+        },
+        {
+          "userID": 2,
+          "date": "2019/06/17",
+          "hoursSlept": 5.9,
+          "sleepQuality": 3.6
+        },
+        {
+          "userID": 2,
+          "date": "2019/06/16",
+          "hoursSlept": 9.6,
+          "sleepQuality": 4
+        },
+        {
+          "userID": 2,
+          "date": "2019/06/15",
+          "hoursSlept": 9,
+          "sleepQuality": 3.1
+        },
+        {
+          "userID": 5,
+          "date": "2019/06/21",
+          "hoursSlept": 9,
+          "sleepQuality": 4
+        },
+        {
+          "userID": 5,
+          "date": "2019/06/20",
+          "hoursSlept": 8,
+          "sleepQuality": 4
+        },
+        {
+          "userID": 5,
+          "date": "2019/06/19",
+          "hoursSlept": 10,
+          "sleepQuality": 4
+        },
+        {
+          "userID": 5,
+          "date": "2019/06/18",
+          "hoursSlept": 9,
+          "sleepQuality": 4
+        },
+        {
+          "userID": 5,
+          "date": "2019/06/17",
+          "hoursSlept": 8,
+          "sleepQuality": 4
+        },
+        {
+          "userID": 5,
+          "date": "2019/06/16",
+          "hoursSlept": 10,
+          "sleepQuality": 4
+        },
+        {
+          "userID": 5,
+          "date": "2019/06/15",
+          "hoursSlept": 9,
+          "sleepQuality": 4
+        }
       ];
     });
     it('should get a users data from its userID in any data set', function() {
       expect(userRepo.getDataFromUserID(1, hydrationData)).to.eql([{
-        "userID": 1,
-        "date": "2019/06/15",
-        "numOunces": 37
-      },
-      {
-        "userID": 1,
-        "date": "2018/06/16",
-        "numOunces": 39
-      },
-      {
-        "userID": 1,
-        "date": "2016/08/22",
-        "numOunces": 30
-      }
+          "userID": 1,
+          "date": "2019/06/15",
+          "numOunces": 37
+        },
+        {
+          "userID": 1,
+          "date": "2018/06/16",
+          "numOunces": 39
+        },
+        {
+          "userID": 1,
+          "date": "2016/08/22",
+          "numOunces": 30
+        }
       ]);
     });
     it('should get a users most recent date using the app', function() {
-      expect(userRepo.getToday(4, hydrationData)).to.eql("2019/09/20");
+      expect(userRepo.getToday(4, hydrationData)).to.equal("2019/09/20");
     });
     it('should sort data by date and extract its week', function() {
 
@@ -489,12 +491,13 @@ describe('User Repo', function() {
       expect(userRepo.chooseWeekDataForAllUsers(hydrationData, '2019/09/17')[3].date).to.eql("2019/09/17");
       expect(userRepo.chooseWeekDataForAllUsers(hydrationData, '2019/09/17')[3].userID).to.eql(3);
     });
-    it('should get a day of data for all users in data set', function() {
-      expect(userRepo.chooseDayDataForAllUsers(sleepData, '2019/06/15')[0].date).to.eql('2019/06/15');
+    it('Should get a day of data for all users in data set', () => {
+      expect(userRepo.chooseDayDataForAllUsers(sleepData, '2019/06/15')[0].date).to.equal('2019/06/15');
       expect(userRepo.chooseDayDataForAllUsers(sleepData, '2019/06/15')[0].hoursSlept).to.eql(9);
       expect(userRepo.chooseDayDataForAllUsers(sleepData, '2019/06/15')[2].date).to.eql('2019/06/15');
       expect(userRepo.chooseDayDataForAllUsers(sleepData, '2019/06/15')[2].userID).to.eql(5);
     });
+
     it('should isolate a user ID and its values of any relevant data', function() {
       expect(userRepo.isolateUsernameAndRelevantData(sleepData, "2019/06/21", 'sleepQuality', userRepo.chooseWeekDataForAllUsers(sleepData, "2019/06/21"))).to.eql({
         '2': [3.5, 4, 3.3, 3.6, 3.6, 4, 3.1],
