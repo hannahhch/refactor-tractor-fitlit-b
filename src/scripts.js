@@ -9,7 +9,9 @@ import './images/The Rock.jpg';
 // import sleepData from './data/sleep';
 // import activityData from './data/activity';
 
-import {getUserData} from './apiCalls.js';
+import {
+  getUserData
+} from './apiCalls.js';
 
 import User from './User';
 import Activity from './Activity';
@@ -49,6 +51,10 @@ var userMinutesThisWeek = document.getElementById('userMinutesThisWeek');
 var bestUserSteps = document.getElementById('bestUserSteps');
 var streakList = document.getElementById('streakList');
 var streakListMinutes = document.getElementById('streakListMinutes')
+
+// this element was missing, from method addInfoToSidebar -> avgStepGoalCard.innetText
+var avgStepGoalCard = document.getElementById('avStepGoalCard')
+
 let user
 // let userRepo
 // let hydrationRepo
@@ -59,54 +65,72 @@ window.addEventListener('load', fetchData);
 
 function fetchData() {
   Promise.all([getUserData('users'), getUserData('sleep'), getUserData('activity'), getUserData('hydration')])
-  .then(values => {
-    console.log(values)
-    startApp(values)
-  })
+    .then(values => {
+      startApp(values)
+    })
 }
 //values[0].userData
 //values[1].sleepData
 //values[2].activityData
 //values[3].hydrationData
 
-function startApp(values) {
-  let userRepo = new UserRepo(makeUsers(values[0].userData));
-  let hydrationRepo = new Hydration(values[3].hydrationData);
-  let sleepRepo = new Sleep(values[1].sleepData);
-  let activityRepo = new Activity(values[2].activityData);
+function startApp(fetchedData) {
+  let userRepo = new UserRepo(makeUsers(fetchedData[0].userData));
+  console.log('USERS ->>>', userRepo)
+  let hydrationRepo = new Hydration(fetchedData[3].hydrationData);
+  console.log('HYDRATION ----->', hydrationRepo);
+  let sleepRepo = new Sleep(fetchedData[1].sleepData);
+  console.log('SLEEP ---->', sleepRepo)
+  let activityRepo = new Activity(fetchedData[2].activityData);
+  console.log('ACTIVITY --->', activityRepo);
   let userNowId = pickUser();
   let userNow = getUserById(userNowId, userRepo);
-  let today = makeToday(userRepo, userNowId, hydrationRepo);
-  let randomHistory = makeRandomDate(userRepo, userNowId, hydrationRepo);
-  historicalWeek.forEach(instance => instance.insertAdjacentHTML('afterBegin', `Week of ${randomHistory}`));
+  let today = makeToday(userRepo, userNowId, fetchedData[3].hydrationData);
+
+  // THIS RANDOMHISTORY VARIABLE STARTS WEEK FROM RANDOM WEEK I THINK !!!
+  // ITS ALSO USED IN METHOD LINE -> 99 ADDFREINDSGAMEINFO
+  let randomHistory = makeRandomDate(userRepo, userNowId, fetchedData[3].hydrationData);
+  // historicalWeek.forEach(instance => instance.insertAdjacentHTML('afterBegin', `Week of ${randomHistory}`));
   addInfoToSidebar(userNow, userRepo);
-  addHydrationInfo(userNowId, hydrationRepo, today, userRepo, randomHistory);
-  addSleepInfo(userNowId, sleepRepo, today, userRepo, randomHistory);
+  // addHydrationInfo(userNowId, hydrationRepo, today, userRepo, randomHistory);
+  // addSleepInfo(userNowId, sleepRepo, today, userRepo, randomHistory);
   let winnerNow = makeWinnerID(activityRepo, userNow, today, userRepo);
-  addActivityInfo(userNowId, activityRepo, today, userRepo, randomHistory, userNow, winnerNow);
+  // addActivityInfo(userNowId, activityRepo, today, userRepo, randomHistory, userNow, winnerNow);
+
+  /// THIS METHOD PULLS DATA FOR WEEKLY -> addFriendGameInfo
   addFriendGameInfo(userNowId, activityRepo, userRepo, today, randomHistory, userNow);
 }
 
-function makeUsers(usersData) {
-  console.log("theData", usersData)
-  return usersData.map(userData => user = new User(userData))
 
+//this function creates new instances of the user class!
+// its working [x]
+function makeUsers(usersData) {
+  return usersData.map(userData => user = new User(userData))
 }
 
 function pickUser() {
   return Math.floor(Math.random() * 50);
 }
 
+// this method looks like gives whole user object back by checking it by given ID
+// its working [x]
 function getUserById(id, listRepo) {
-  return listRepo.getDataFromID(id);
+  let result = listRepo.getDataFromID(id);
+  // console.log(result)
+  return result
 }
 
+// this method runs all info to be displayed on nav bar!
+// its working [x]
 
 function addInfoToSidebar(user, userStorage) {
+  // console.log('ADD INFO', userStorage)
+  // console.log('here', user);
   sidebarName.innerText = user.name;
   headerText.innerText = `${user.getFirstName()}'s Activity Tracker`;
   stepGoalCard.innerText = `Your daily step goal is ${user.dailyStepGoal}.`
-  avStepGoalCard.innerText = `The average daily step goal is ${userStorage.calculateAverageStepGoal()}`;
+  //avgStepGoalCard can be found anywhere
+  avgStepGoalCard.innerText = `The average daily step goal is ${userStorage.calculateAverageStepGoal()}`;
   userAddress.innerText = user.address;
   userEmail.innerText = user.email;
   userStridelength.innerText = `Your stridelength is ${user.strideLength} meters.`;
@@ -118,15 +142,16 @@ function makeFriendHTML(user, userStorage) {
 }
 
 function makeWinnerID(activityInfo, user, dateString, userStorage) {
+  // console.log('activity', activityInfo, 'user', user, 'date', dateString, 'userrepo', userStorage)
   return activityInfo.getWinnerId(user, dateString, userStorage)
 }
 
 function makeToday(userStorage, id, dataSet) {
-  console.log(userStorage, id, dataSet, 'makeToday fn')
-  console.log(userStorage.makeSortedUserArray(id, dataSet), "hello")
+  // console.log(userStorage, id, dataSet, 'makeToday fn')
+  // console.log(userStorage.makeSortedUserArray(id, dataSet), "hello")
   var sortedArray = userStorage.makeSortedUserArray(id, dataSet);
-  // return sortedArray[0].date;
-  console.log(sortedArray[0].date)
+  return sortedArray[0].date;
+  // console.log('Here baby', sortedArray[0].date)
 }
 
 function makeRandomDate(userStorage, id, dataSet) {
