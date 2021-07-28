@@ -4,10 +4,12 @@ import './css/styles.scss';
 import './images/person walking on path.jpg';
 import './images/The Rock.jpg';
 
-import userData from './data/users';
-import hydrationData from './data/hydration';
-import sleepData from './data/sleep';
-import activityData from './data/activity';
+// import userData from './data/users';
+// import hydrationData from './data/hydration';
+// import sleepData from './data/sleep';
+// import activityData from './data/activity';
+
+import {getUserData} from './apiCalls.js';
 
 import User from './User';
 import Activity from './Activity';
@@ -47,18 +49,35 @@ var userMinutesThisWeek = document.getElementById('userMinutesThisWeek');
 var bestUserSteps = document.getElementById('bestUserSteps');
 var streakList = document.getElementById('streakList');
 var streakListMinutes = document.getElementById('streakListMinutes')
+let user
+// let userRepo
+// let hydrationRepo
+// let sleepRepo
+// let activityRepo
+// Event listenser 👇
+window.addEventListener('load', fetchData);
 
-function startApp() {
-  let userList = [];
-  makeUsers(userList);
-  let userRepo = new UserRepo(userList);
-  let hydrationRepo = new Hydration(hydrationData);
-  let sleepRepo = new Sleep(sleepData);
-  let activityRepo = new Activity(activityData);
-  var userNowId = pickUser();
+function fetchData() {
+  Promise.all([getUserData('users'), getUserData('sleep'), getUserData('activity'), getUserData('hydration')])
+  .then(values => {
+    console.log(values)
+    startApp(values)
+  })
+}
+//values[0].userData
+//values[1].sleepData
+//values[2].activityData
+//values[3].hydrationData
+
+function startApp(values) {
+  let userRepo = new UserRepo(makeUsers(values[0].userData));
+  let hydrationRepo = new Hydration(values[3].hydrationData);
+  let sleepRepo = new Sleep(values[1].sleepData);
+  let activityRepo = new Activity(values[2].activityData);
+  let userNowId = pickUser();
   let userNow = getUserById(userNowId, userRepo);
-  let today = makeToday(userRepo, userNowId, hydrationData);
-  let randomHistory = makeRandomDate(userRepo, userNowId, hydrationData);
+  let today = makeToday(userRepo, userNowId, hydrationRepo);
+  let randomHistory = makeRandomDate(userRepo, userNowId, hydrationRepo);
   historicalWeek.forEach(instance => instance.insertAdjacentHTML('afterBegin', `Week of ${randomHistory}`));
   addInfoToSidebar(userNow, userRepo);
   addHydrationInfo(userNowId, hydrationRepo, today, userRepo, randomHistory);
@@ -68,11 +87,10 @@ function startApp() {
   addFriendGameInfo(userNowId, activityRepo, userRepo, today, randomHistory, userNow);
 }
 
-function makeUsers(array) {
-  userData.forEach(function(dataItem) {
-    let user = new User(dataItem);
-    array.push(user);
-  })
+function makeUsers(usersData) {
+  console.log("theData", usersData)
+  return usersData.map(userData => user = new User(userData))
+
 }
 
 function pickUser() {
@@ -104,8 +122,11 @@ function makeWinnerID(activityInfo, user, dateString, userStorage) {
 }
 
 function makeToday(userStorage, id, dataSet) {
+  console.log(userStorage, id, dataSet, 'makeToday fn')
+  console.log(userStorage.makeSortedUserArray(id, dataSet), "hello")
   var sortedArray = userStorage.makeSortedUserArray(id, dataSet);
-  return sortedArray[0].date;
+  // return sortedArray[0].date;
+  console.log(sortedArray[0].date)
 }
 
 function makeRandomDate(userStorage, id, dataSet) {
@@ -182,7 +203,7 @@ function makeStepStreakHTML(id, activityInfo, userStorage, method) {
   return method.map(streakData => `<li class="historical-list-listItem">${streakData}!</li>`).join('');
 }
 
-startApp();
+
 
 
 
