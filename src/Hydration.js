@@ -17,8 +17,8 @@ class Hydration {
     let findOuncesByDate = hydrationData.find((data) => this.userID === data.userID && date === data.date);
     return findOuncesByDate.numOunces;
   }
-  calculateFirstWeekOunces(userRepo, id) {
-    return userRepo.getFirstWeek(id, this.hydrationData).map((data) => `${data.date}: ${data.numOunces}`);
+  calculateFirstWeekOunces(userRepo, hydrationData) {
+    return userRepo.getFirstWeek(this.userID, hydrationData).map((data) => `${data.date}: ${data.numOunces}`);
   }
   calculateRandomWeekOunces(date, id, userRepo) {
     return userRepo.getWeekFromDate(date, id, this.hydrationData).map((data) => `${data.date}: ${data.numOunces}`);
@@ -37,9 +37,9 @@ Iteration 3 - Hydration
 Data
 Create classes and methods that can calculate:
 
-[ ] For a user (identified by their userID - this is the same for all methods requiring a specific user’s data), the average fluid ounces consumed per day for all time
-[ ] For a user, how many fluid ounces they consumed for a specific day (identified by a date)
-[ ] For a user, how many fluid ounces of water consumed each day over the course of a week (7 days) - return the amount for each day
+[X] For a user (identified by their userID - this is the same for all methods requiring a specific user’s data), the average fluid ounces consumed per day for all time
+[X] For a user, how many fluid ounces they consumed for a specific day (identified by a date)
+[X] For a user, how many fluid ounces of water consumed each day over the course of a week (7 days) - return the amount for each day
 [ ] You have to decide which classes should contain each method. Think about whose responsibility it is to own the method.
 
 Dashboard
