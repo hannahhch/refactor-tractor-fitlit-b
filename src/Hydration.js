@@ -1,10 +1,11 @@
 class Hydration {
   constructor(hydrationData) {
-    this.userID = hydrationData[0].userID
-    this.date = hydrationData[0].date
+    this.userID = hydrationData[0].userID;
+    this.date = hydrationData[0].date;
+    this.numOunces = hydrationData[0].numOunces;
   }
-  calculateAverageOunces(id) {
-    let perDayUserHydration = this.hydrationData.filter((data) => id === data.userID);
+  calculateAverageOunces(hydrationData) {
+    let perDayUserHydration = hydrationData.filter((data) => id === data.userID);
     return perDayUserHydration.reduce((sumSoFar, data) => {
       return sumSoFar += data.numOunces;
     }, 0) / perDayUserHydration.length;
