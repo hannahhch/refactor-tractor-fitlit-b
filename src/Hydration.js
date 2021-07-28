@@ -5,10 +5,12 @@ class Hydration {
     this.numOunces = hydrationData[0].numOunces;
   }
   calculateAverageOunces(hydrationData) {
-    let perDayUserHydration = hydrationData.filter((data) => id === data.userID);
-    return perDayUserHydration.reduce((sumSoFar, data) => {
+    console.log(hydrationData)
+    let perDayUserHydration = hydrationData.filter((data) => this.userID === data.userID);
+    let avgWater = perDayUserHydration.reduce((sumSoFar, data) => {
       return sumSoFar += data.numOunces;
     }, 0) / perDayUserHydration.length;
+    return Math.round(avgWater)
   }
   calculateDailyOunces(id, date) {
     let findOuncesByDate = this.hydrationData.find((data) => id === data.userID && date === data.date);

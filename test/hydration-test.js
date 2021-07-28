@@ -39,9 +39,10 @@ describe.only('Hydration', () => {
     expect(hydration.numOunces).to.equal(hydrationData[0].numOunces);
   });
 
-  it('should find the average water intake per day for a user', function() {
-    expect(hydration.calculateAverageOunces(hydrationData)).to.equal(2);
+  it('Should find the average water all times for a user', function() {
+    expect(hydration.calculateAverageOunces(hydrationData)).to.equal(65);
   });
+
   //
   // it('should find the water intake for a user on a specified date', function() {
   //   expect(hydration.calculateDailyOunces(1, "2019/06/15")).to.equal(37);

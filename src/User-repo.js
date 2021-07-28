@@ -24,7 +24,7 @@ class UserRepo {
       total += user.dailyStepGoal;
       return total
     }, 0);
-    console.log(totalStepGoal / this.users.length, "nina")
+    // console.log(totalStepGoal / this.users.length, "nina")
     return totalStepGoal / this.users.length;
   }
 
@@ -38,7 +38,7 @@ class UserRepo {
   getToday(id, dataSet) {
     // return this.makeSortedUserArray(id, dataSet)[0].date;
     let result = this.makeSortedUserArray(id, dataSet)[0].date;
-    console.log("Natalie getToday", result)
+    // console.log("Natalie getToday", result)
     return result
   }
   //Natalie
@@ -61,7 +61,6 @@ class UserRepo {
     let result = dataSet.filter(dataItem => {
       return dataItem.date === date
     });
-    console.log(result)
     return result
   }
 
