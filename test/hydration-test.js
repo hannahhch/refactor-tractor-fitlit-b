@@ -22,12 +22,18 @@ describe.only('Hydration', () => {
   it('Should be a function', () => {
     expect(Hydration).to.be.a('function')
   });
-  //
-  // it('should take in a list of data', function() {
-  //   expect(hydration.hydrationData[0].userID).to.equal(1);
-  //   expect(hydration.hydrationData[2].numOunces).to.equal(1);
-  //   expect(hydration.hydrationData[4].date).to.equal('2018/10/23');
-  // });
+
+  it('Should be instance of Hydration', () => {
+    expect(hydration).to.be.instanceof(Hydration)
+  })
+
+  it('Should take in user id', () => {
+    expect(hydration.userID).to.equal(1);
+  });
+
+  it('Should have a date', () => {
+    expect(hydration.date).to.equal(hydrationData[0].date);
+  });
   //
   // it('should find the average water intake per day for a user', function() {
   //   expect(hydration.calculateAverageOunces(3)).to.equal(2);
