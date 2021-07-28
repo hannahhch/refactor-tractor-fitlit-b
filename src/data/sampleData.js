@@ -129,3 +129,9 @@ const sleepData = [{
     "sleepQuality": 4.2
   },
 ]
+
+export {
+  activityData,
+  hydrationData,
+  sleepData
+}
