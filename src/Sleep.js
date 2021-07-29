@@ -31,12 +31,14 @@ class Sleep {
     let findSleepQualityByDate = sleepData.find((data) => this.id === data.userID && date === data.date);
     return findSleepQualityByDate.sleepQuality;
   }
-  // calculateWeekSleep(date, id, userRepo) {
-  //   return userRepo.getWeekFromDate(date, id, this.sleepData).map((data) => `${data.date}: ${data.hoursSlept}`);
-  // }
-  // calculateWeekSleepQuality(date, id, userRepo) {
-  //   return userRepo.getWeekFromDate(date, id, this.sleepData).map((data) => `${data.date}: ${data.sleepQuality}`);
-  // }
+
+  calculateWeekSleep(date, sleepData, userRepo) {
+    return userRepo.getWeekFromDate(date, this.id, sleepData).map((data) => `${data.date}: ${data.hoursSlept}`);
+  }
+
+  calculateWeekSleepQuality(date, sleepData, userRepo) {
+    return userRepo.getWeekFromDate(date, this.id, sleepData).map((data) => `${data.date}: ${data.sleepQuality}`);
+  }
   // calculateAllUserSleepQuality() {
   //   var totalSleepQuality = this.sleepData.reduce(function(sumSoFar, dataItem) {
   //     sumSoFar += dataItem.sleepQuality;
