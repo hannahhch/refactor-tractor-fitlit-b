@@ -45,23 +45,21 @@ describe.only('Sleep', function() {
     expect(sleep.date).equal(sleepData[0].date)
   });
 
-  it('Should find the average sleep hours per day for a user', function() {
+  it('Should find the average sleep hours per day for a user', () => {
     expect(sleep.calculateAverageSleep(sleepData)).to.equal(8);
   });
 
-  it('Should find the average sleep quality per day for a user', function() {
+  it('Should find the average sleep quality per day for a user', () => {
     expect(sleep.calculateAverageSleepQuality(sleepData)).to.equal(2);
   });
 
-  // it('should find the sleep hours for a user on a specified date', function() {
-  //   expect(sleep.calculateDailySleep(2, "2017/06/15")).to.equal(7);
-  //   expect(sleep.calculateDailySleep(4, "2019/06/21")).to.equal(6.1);
-  // });
-  //
-  // it('should find the sleep quality for a user on a specified date', function() {
-  //   expect(sleep.calculateDailySleepQuality(2, "2017/06/15")).to.equal(4.7);
-  //   expect(sleep.calculateDailySleepQuality(4, "2019/06/21")).to.equal(3.5);
-  // });
+  it('Should find the sleep hours for a user on a specified date', () => {
+    expect(sleep.calculateDailySleep(sleepData, "2019/06/15")).to.equal(6.1);
+  });
+
+  it('Should find the sleep quality for a user on a specified date', function() {
+    expect(sleep.calculateDailySleepQuality(sleepData, "2019/06/15")).to.equal(2.2);
+  });
   //
   // it('should find sleep by day for that days week', function() {
   //
