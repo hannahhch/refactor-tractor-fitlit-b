@@ -159,6 +159,9 @@ function makeRandomDate(userStorage, id, dataSet) {
 
 }
 
+
+/// THIS METHOD IS DISPLAYING INTO DOM ALL HYDRATION DATA, DAILY WEEKLY AND ALL TIME CONSUMPTION
+// [X] IT IS WORKING
 function addHydrationInfo(hydrationInfo, dateString, userStorage, laterDateString, hydrationData) {
   hydrationToday.insertAdjacentHTML('afterBegin', `<p>You drank</p><p><span class="number">${hydrationInfo.calculateDailyOunces(hydrationData,dateString)}</span></p><p>oz water today.</p>`);
   hydrationAverage.insertAdjacentHTML('afterBegin', `<p>Your average water intake is</p><p><span class="number">${hydrationInfo.calculateAverageOunces(hydrationData)}</span></p> <p>oz per day.</p>`)
