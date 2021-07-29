@@ -7,7 +7,7 @@ import UserRepo from '../src/User-repo';
 import User from '../src/User';
 
 import {
-  hydrationData
+  sleepData
 } from '../src/data/sampleData';
 import {
   userData
@@ -20,25 +20,39 @@ describe.only('Sleep', function() {
   beforeEach(function() {
     sleep = new Sleep(sleepData)
     user = userData.map(user => new User(user))
-    console.log(user)
+    // console.log(user)
     userRepo = new UserRepo(user);
+    // console.log(userRepo)
   });
 
-  // it('should take in a list of data', function() {
-  //   expect(sleep.sleepData[1].userID).to.equal(2);
-  //   expect(sleep.sleepData[3].hoursSlept).to.equal(5.4);
-  //   expect(sleep.sleepData[6].sleepQuality).to.equal(3);
-  //   expect(sleep.sleepData[7].date).to.equal('2018/07/23');
-  // });
-  //
-  // it('should find the average sleep hours per day for a user', function() {
-  //   expect(sleep.calculateAverageSleep(3)).to.equal(3);
-  // });
-  //
-  // it('should find the average sleep quality per day for a user', function() {
-  //   expect(sleep.calculateAverageSleepQuality(3)).to.equal(2);
-  // });
-  //
+  it('Should be a function', () => {
+    expect(Sleep).to.be.a('function')
+  });
+
+  it('Should have an ID', () => {
+    expect(sleep.id).to.equal(sleepData[0].userID)
+  });
+
+  it('Should have property of hours slept', () => {
+    expect(sleep.hoursSlept).to.equal(sleepData[0].hoursSlept)
+  });
+
+  it('Should have propety of sleep quality', () => {
+    expect(sleep.sleepQuality).to.equal(sleepData[0].sleepQuality)
+  });
+
+  it('Should have property of current date', () => {
+    expect(sleep.date).equal(sleepData[0].date)
+  });
+
+  it('Should find the average sleep hours per day for a user', function() {
+    expect(sleep.calculateAverageSleep(sleepData)).to.equal(8);
+  });
+
+  it('Should find the average sleep quality per day for a user', function() {
+    expect(sleep.calculateAverageSleepQuality(sleepData)).to.equal(2);
+  });
+
   // it('should find the sleep hours for a user on a specified date', function() {
   //   expect(sleep.calculateDailySleep(2, "2017/06/15")).to.equal(7);
   //   expect(sleep.calculateDailySleep(4, "2019/06/21")).to.equal(6.1);
