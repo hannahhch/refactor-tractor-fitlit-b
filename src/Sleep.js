@@ -1,4 +1,4 @@
-import sleepData from './data/sleep';
+// import sleepData from './data/sleep';
 
 class Sleep {
   constructor(sleepData) {
@@ -66,29 +66,29 @@ class Sleep {
       return element[Object.keys(element)] === Object.values(sortedArray[0])[0]
     });
 
-    let bestSleeperIds = bestSleepers.map(function(bestSleeper) {
+    let bestSleeperIds = bestSleepers.map((bestSleeper) => {
       return (Object.keys(bestSleeper));
     });
 
-    return bestSleeperIds.map(function(sleepNumber) {
+    return bestSleeperIds.map((sleepNumber) => {
       return userRepo.getDataFromID(parseInt(sleepNumber)).name;
     });
   }
 
-  determineSleepHoursWinnerForDay(date, userRepo) {
-    let timeline = userRepo.chooseDayDataForAllUsers(this.sleepData, date);
-    let sleepRankWithData = userRepo.combineRankedUserIDsAndAveragedData(this.sleepData, date, 'hoursSlept', timeline);
+  determineSleepHoursWinnerForDay(date, sleepData, userRepo) {
+    let timeline = userRepo.chooseDayDataForAllUsers(sleepData, date);
+    let sleepRankWithData = userRepo.combineRankedUserIDsAndAveragedData(sleepData, date, 'hoursSlept', timeline);
 
     return this.getWinnerNamesFromList(sleepRankWithData, userRepo);
   }
 
-  // calculateAllUserSleepQuality() {
-  //   var totalSleepQuality = this.sleepData.reduce(function(sumSoFar, dataItem) {
-  //     sumSoFar += dataItem.sleepQuality;
-  //     return sumSoFar;
-  //   }, 0)
-  //   return totalSleepQuality / sleepData.length
-  // }
+  calculateAllUserSleepQuality() {
+    var totalSleepQuality = this.sleepData.reduce(function(sumSoFar, dataItem) {
+      sumSoFar += dataItem.sleepQuality;
+      return sumSoFar;
+    }, 0)
+    return totalSleepQuality / sleepData.length
+  }
 }
 
 export default Sleep;
@@ -101,18 +101,18 @@ Data
 Create classes and methods that can calculate:
 
 [X] For a user (identified by their userID), the average number of hours slept per day
-[ ] For a user, their average sleep quality per day over all time
-[ ] For a user, how many hours they slept for a specific day (identified by a date)
-[ ] For a user, their sleep quality for a specific day (identified by a date)
-[ ] For a user, how many hours slept each day over the course of a given week (7 days) - you should be able to calculate this for any week, not just the latest week
-[ ] For a user, their sleep quality each day over the course of a given week (7 days) - you should be able to calculate this for any week, not just the latest week
-[ ] For all users, the average sleep quality
+[X] For a user, their average sleep quality per day over all time
+[X] For a user, how many hours they slept for a specific day (identified by a date)
+[X] For a user, their sleep quality for a specific day (identified by a date)
+[X] For a user, how many hours slept each day over the course of a given week (7 days) - you should be able to calculate this for any week, not just the latest week
+[X] For a user, their sleep quality each day over the course of a given week (7 days) - you should be able to calculate this for any week, not just the latest week
+[X] For all users, the average sleep quality
 
 
 Dashboard
 Items to add to the dashboard:
 
-[ ] For a user, their sleep data for the latest day (hours slept and quality of sleep)
-[ ] For a user, their sleep data over the course of the latest week (hours slept and quality of sleep)
-[ ] For a user, their all-time average sleep quality and all-time average number of hours slept
+[X] For a user, their sleep data for the latest day (hours slept and quality of sleep)
+[X] For a user, their sleep data over the course of the latest week (hours slept and quality of sleep)
+[X] For a user, their all-time average sleep quality and all-time average number of hours slept
  */
