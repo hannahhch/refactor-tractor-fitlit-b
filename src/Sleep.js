@@ -1,4 +1,4 @@
-// import sleepData from './data/sleep';
+import sleepData from './data/sleep';
 
 class Sleep {
   constructor(sleepData) {
@@ -83,7 +83,7 @@ class Sleep {
   }
 
   calculateAllUserSleepQuality() {
-    var totalSleepQuality = this.sleepData.reduce(function(sumSoFar, dataItem) {
+    var totalSleepQuality = sleepData.reduce((sumSoFar, dataItem) => {
       sumSoFar += dataItem.sleepQuality;
       return sumSoFar;
     }, 0)

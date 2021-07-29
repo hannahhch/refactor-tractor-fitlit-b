@@ -76,13 +76,13 @@ function fetchData() {
 
 function startApp(fetchedData) {
   let userRepo = new UserRepo(makeUsers(fetchedData[0].userData));
-  console.log('USERS ->>>', userRepo)
+  // console.log('USERS ->>>', userRepo)
   let hydrationRepo = new Hydration(fetchedData[3].hydrationData);
-  console.log('HYDRATION ----->', hydrationRepo);
+  // console.log('HYDRATION ----->', hydrationRepo);
   let sleepRepo = new Sleep(fetchedData[1].sleepData);
-  console.log('SLEEP ---->', sleepRepo)
+  // console.log('SLEEP ---->', sleepRepo)
   let activityRepo = new Activity(fetchedData[2].activityData);
-  console.log('ACTIVITY --->', activityRepo);
+  // console.log('ACTIVITY --->', activityRepo);
   let userNowId = pickUser();
   let userNow = getUserById(userNowId, userRepo);
   let today = makeToday(userRepo, userNowId, fetchedData[3].hydrationData);
@@ -93,7 +93,7 @@ function startApp(fetchedData) {
   // historicalWeek.forEach(instance => instance.insertAdjacentHTML('afterBegin', `Week of ${randomHistory}`));
   addInfoToSidebar(userNow, userRepo);
   // addHydrationInfo(userNowId, hydrationRepo, today, userRepo, randomHistory);
-  // addSleepInfo(userNowId, sleepRepo, today, userRepo, randomHistory);
+  addSleepInfo(fetchedData[1].sleepData, today, sleepRepo, userRepo, randomHistory);
   let winnerNow = makeWinnerID(activityRepo, userNow, today, userRepo);
   // addActivityInfo(userNowId, activityRepo, today, userRepo, randomHistory, userNow, winnerNow);
 
@@ -171,15 +171,17 @@ function makeHydrationHTML(id, hydrationInfo, userStorage, method) {
   return method.map(drinkData => `<li class="historical-list-listItem">On ${drinkData}oz</li>`).join('');
 }
 
-function addSleepInfo(id, sleepInfo, dateString, userStorage, laterDateString) {
-  sleepToday.insertAdjacentHTML("afterBegin", `<p>You slept</p> <p><span class="number">${sleepInfo.calculateDailySleep(id, dateString)}</span></p> <p>hours today.</p>`);
-  sleepQualityToday.insertAdjacentHTML("afterBegin", `<p>Your sleep quality was</p> <p><span class="number">${sleepInfo.calculateDailySleepQuality(id, dateString)}</span></p><p>out of 5.</p>`);
-  avUserSleepQuality.insertAdjacentHTML("afterBegin", `<p>The average user's sleep quality is</p> <p><span class="number">${Math.round(sleepInfo.calculateAllUserSleepQuality() * 100) / 100}</span></p><p>out of 5.</p>`);
-  sleepThisWeek.insertAdjacentHTML('afterBegin', makeSleepHTML(id, sleepInfo, userStorage, sleepInfo.calculateWeekSleep(dateString, id, userStorage)));
-  sleepEarlierWeek.insertAdjacentHTML('afterBegin', makeSleepHTML(id, sleepInfo, userStorage, sleepInfo.calculateWeekSleep(laterDateString, id, userStorage)));
+// this method is displaying users weekly , daily slept hours
+// [x] its working
+function addSleepInfo(sleepData, dateString, sleepRepo, userStorage, laterDateString) {
+  sleepToday.insertAdjacentHTML("afterBegin", `<p>You slept</p> <p><span class="number">${sleepRepo.calculateDailySleep(sleepData, dateString)}</span></p> <p>hours today.</p>`);
+  sleepQualityToday.insertAdjacentHTML("afterBegin", `<p>Your sleep quality was</p> <p><span class="number">${sleepRepo.calculateDailySleepQuality(sleepData, dateString)}</span></p><p>out of 5.</p>`);
+  avUserSleepQuality.insertAdjacentHTML("afterBegin", `<p>The average user's sleep quality is</p> <p><span class="number">${Math.round(sleepRepo.calculateAllUserSleepQuality() * 100) / 100}</span></p><p>out of 5.</p>`);
+  sleepThisWeek.insertAdjacentHTML('afterBegin', makeSleepHTML(sleepData, userStorage, sleepRepo.calculateWeekSleep(dateString, sleepData, userStorage)));
+  sleepEarlierWeek.insertAdjacentHTML('afterBegin', makeSleepHTML(sleepData, userStorage, sleepRepo.calculateWeekSleep(laterDateString, sleepData, userStorage)));
 }
 
-function makeSleepHTML(id, sleepInfo, userStorage, method) {
+function makeSleepHTML(sleepData, userStorage, method) {
   return method.map(sleepData => `<li class="historical-list-listItem">On ${sleepData} hours</li>`).join('');
 }
 
