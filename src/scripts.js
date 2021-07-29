@@ -92,7 +92,6 @@ function startApp(fetchedData) {
   let randomHistory = makeRandomDate(userRepo, userNowId, fetchedData[3].hydrationData);
   // historicalWeek.forEach(instance => instance.insertAdjacentHTML('afterBegin', `Week of ${randomHistory}`));
   addInfoToSidebar(userNow, userRepo);
-  // addHydrationInfo(userNowId, hydrationRepo, today, userRepo, randomHistory);
   addSleepInfo(fetchedData[1].sleepData, today, sleepRepo, userRepo, randomHistory);
   let winnerNow = makeWinnerID(activityRepo, userNow, today, userRepo);
   // addActivityInfo(userNowId, activityRepo, today, userRepo, randomHistory, userNow, winnerNow);
@@ -185,7 +184,13 @@ function makeSleepHTML(sleepData, userStorage, method) {
   return method.map(sleepData => `<li class="historical-list-listItem">On ${sleepData} hours</li>`).join('');
 }
 
+
+// it looks like this method is never been used anywhere so far, dont see anyrhing on dom updates ???
 function makeSleepQualityHTML(id, sleepInfo, userStorage, method) {
+  console.log('id', id);
+  console.log('sleepInfo', sleepInfo);
+  console.log('userRepo', userStorage);
+  console.log('method', method);
   return method.map(sleepQualityData => `<li class="historical-list-listItem">On ${sleepQualityData}/5 quality of sleep</li>`).join('');
 }
 
