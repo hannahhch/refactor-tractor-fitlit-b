@@ -2,10 +2,10 @@ import sleepData from './data/sleep';
 
 class Sleep {
   constructor(sleepData) {
-    this.id = sleepData[0].userID;
-    this.hoursSlept = sleepData[0].hoursSlept;
-    this.sleepQuality = sleepData[0].sleepQuality;
-    this.date = sleepData[0].date;
+    this.id = sleepData.userID;
+    this.hoursSlept = sleepData.hoursSlept;
+    this.sleepQuality = sleepData.sleepQuality;
+    this.date = sleepData.date;
   }
 
   calculateAverageSleep(sleepData) {
@@ -55,9 +55,12 @@ class Sleep {
   }
 
   determineSleepWinnerForWeek(date, sleepData, userRepo) {
+    // console.log(date, 'sleepData->', sleepData)
     let timeline = userRepo.chooseWeekDataForAllUsers(sleepData, date);
-    let sleepRankWithData = userRepo.combineRankedUserIDsAndAveragedData(this.sleepData, date, 'sleepQuality', timeline);
 
+    let sleepRankWithData = userRepo.combineRankedUserIDsAndAveragedData(sleepData, date, 'sleepQuality', timeline);
+    // console.log('here', sleepRankWithData);
+    // console.log('mathos', this.getWinnerNamesFromList(sleepRankWithData, userRepo))
     return this.getWinnerNamesFromList(sleepRankWithData, userRepo);
   }
 
@@ -65,14 +68,19 @@ class Sleep {
     let bestSleepers = sortedArray.filter((element) => {
       return element[Object.keys(element)] === Object.values(sortedArray[0])[0]
     });
-
     let bestSleeperIds = bestSleepers.map((bestSleeper) => {
       return (Object.keys(bestSleeper));
     });
-
-    return bestSleeperIds.map((sleepNumber) => {
-      return userRepo.getDataFromID(parseInt(sleepNumber)).name;
+    let number = bestSleeperIds.flat();
+    return number.map((sleepNumber) => {
+      // console.log('sleep number', typeof sleepNumber);
+      let number = parseInt(sleepNumber)
+      // console.log('parsent number--->', typeof number);
+      // console.log('get data from user id', userRepo.getDataFromID(parseInt(sleepNumber)).name)
+      return userRepo.getDataFromID(parseInt(number)).name
     });
+    // console.log('result', result)
+    // return result;
   }
 
   determineSleepHoursWinnerForDay(date, sleepData, userRepo) {

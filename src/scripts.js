@@ -75,37 +75,35 @@ function fetchData() {
 //values[3].hydrationData
 
 function startApp(fetchedData) {
-  let userRepo = new UserRepo(makeUsers(fetchedData[0].userData));
+  let users = fetchedData[0].userData.map(user => new User(user));
+  let userRepo = new UserRepo(users)
   // console.log('USERS ->>>', userRepo)
-  let hydrationRepo = new Hydration(fetchedData[3].hydrationData);
+  let hydrationRepo = fetchedData[3].hydrationData.map(hydration => new Hydration(hydration));
   // console.log('HYDRATION ----->', hydrationRepo);
-  let sleepRepo = new Sleep(fetchedData[1].sleepData);
+  let sleepRepo = fetchedData[1].sleepData.map(sleep => new Sleep(sleep));
   // console.log('SLEEP ---->', sleepRepo)
-  let activityRepo = new Activity(fetchedData[2].activityData);
+  let activityRepo = fetchedData[2].activityData.map(activity => new Activity(activity));
   // console.log('ACTIVITY --->', activityRepo);
   let userNowId = pickUser();
   let userNow = getUserById(userNowId, userRepo);
   let today = makeToday(userRepo, userNowId, fetchedData[3].hydrationData);
-
-  // THIS RANDOMHISTORY VARIABLE STARTS WEEK FROM RANDOM WEEK I THINK !!!
-  // ITS ALSO USED IN METHOD LINE -> 99 ADDFREINDSGAMEINFO
   let randomHistory = makeRandomDate(userRepo, userNowId, fetchedData[3].hydrationData);
-  // historicalWeek.forEach(instance => instance.insertAdjacentHTML('afterBegin', `Week of ${randomHistory}`));
-  addInfoToSidebar(userNow, userRepo);
-  addSleepInfo(fetchedData[1].sleepData, today, sleepRepo, userRepo, randomHistory);
-  let winnerNow = makeWinnerID(activityRepo, userNow, today, userRepo);
-  // addActivityInfo(userNowId, activityRepo, today, userRepo, randomHistory, userNow, winnerNow);
-  addHydrationInfo(hydrationRepo, today, userRepo, randomHistory, fetchedData[3].hydrationData)
-  /// THIS METHOD PULLS DATA FOR WEEKLY -> addFriendGameInfo
-  addFriendGameInfo(userNowId, activityRepo, userRepo, today, randomHistory, userNow);
+  // // historicalWeek.forEach(instance => instance.insertAdjacentHTML('afterBegin', `Week of ${randomHistory}`));
+  addInfoToSidebar(userRepo, userRepo.users[pickUser(userRepo.users)]);
+  addSleepInfo(fetchedData[1].sleepData, today, sleepRepo[pickUser(sleepRepo)], userRepo, randomHistory);
+  // let winnerNow = makeWinnerID(activityRepo, userNow, today, userRepo);
+  // // addActivityInfo(userNowId, activityRepo, today, userRepo, randomHistory, userNow, winnerNow);
+  addHydrationInfo(hydrationRepo[pickUser(hydrationRepo)], today, userRepo, randomHistory, fetchedData[3].hydrationData)
+  // /// THIS METHOD PULLS DATA FOR WEEKLY -> addFriendGameInfo
+  //   addFriendGameInfo(userNowId, activityRepo, userRepo, today, randomHistory, userNow);
 }
 
 
 //this function creates new instances of the user class!
 // its working [x]
-function makeUsers(usersData) {
-  return usersData.map(userData => user = new User(userData))
-}
+// function makeUsers(usersData) {
+//   return usersData.map(userData => user = new User(userData))
+// }
 
 function pickUser() {
   return Math.floor(Math.random() * 50);
@@ -115,29 +113,27 @@ function pickUser() {
 // its working [x]
 function getUserById(id, listRepo) {
   let result = listRepo.getDataFromID(id);
-  // console.log(result)
   return result
 }
 
 // this method runs all info to be displayed on nav bar!
 // its working [x]
 
-function addInfoToSidebar(user, userStorage) {
-  // console.log('ADD INFO', userStorage)
-  // console.log('here', user);
+function addInfoToSidebar(userRepo, user) {
+  // console.log('ADD INFO', user)
+  // console.log('user repo', userRepo);
   sidebarName.innerText = user.name;
   headerText.innerText = `${user.getFirstName()}'s Activity Tracker`;
   stepGoalCard.innerText = `Your daily step goal is ${user.dailyStepGoal}.`
-  //avgStepGoalCard can be found anywhere
-  avgStepGoalCard.innerText = `The average daily step goal is ${userStorage.calculateAverageStepGoal()}`;
+  avgStepGoalCard.innerText = `The average daily step goal is ${userRepo.calculateAverageStepGoal()}`;
   userAddress.innerText = user.address;
   userEmail.innerText = user.email;
   userStridelength.innerText = `Your stridelength is ${user.strideLength} meters.`;
-  friendList.insertAdjacentHTML('afterBegin', makeFriendHTML(user, userStorage))
+  friendList.insertAdjacentHTML('afterBegin', makeFriendHTML(userRepo, user))
 }
 
-function makeFriendHTML(user, userStorage) {
-  return user.getFriendsNames(userStorage).map(friendName => `<li class='historical-list-listItem'>${friendName}</li>`).join('');
+function makeFriendHTML(userRepo, user) {
+  return user.getFriendsNames(userRepo.users).map(friendName => `<li class='historical-list-listItem'>${friendName}</li>`).join('');
 }
 
 function makeWinnerID(activityInfo, user, dateString, userStorage) {
@@ -190,10 +186,6 @@ function makeSleepHTML(sleepData, userStorage, method) {
 
 // it looks like this method is never been used anywhere so far, dont see anyrhing on dom updates ???
 function makeSleepQualityHTML(id, sleepInfo, userStorage, method) {
-  console.log('id', id);
-  console.log('sleepInfo', sleepInfo);
-  console.log('userRepo', userStorage);
-  console.log('method', method);
   return method.map(sleepQualityData => `<li class="historical-list-listItem">On ${sleepQualityData}/5 quality of sleep</li>`).join('');
 }
 

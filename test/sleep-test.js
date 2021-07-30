@@ -17,18 +17,20 @@ import {
 describe.only('Sleep', function() {
   let sleep, users, userRepo
 
-  beforeEach(function() {
-    sleep = new Sleep(sleepData)
+  beforeEach(() => {
+    sleep = new Sleep(sleepData[0])
     users = userData.map(user => new User(user))
-    // console.log(user)
     userRepo = new UserRepo(users);
-    // console.log(userRepo)
+
   });
 
   it('Should be a function', () => {
     expect(Sleep).to.be.a('function')
   });
 
+  it('Should be instance of the Sleep', () => {
+    expect(sleep).to.be.instanceof(Sleep)
+  })
   it('Should have an ID', () => {
     expect(sleep.id).to.equal(sleepData[0].userID)
   });
@@ -70,11 +72,11 @@ describe.only('Sleep', function() {
   });
 
   it('Should determine the best quality sleepers for a week', () => {
-    expect(sleep.determineBestSleepers("2019/06/21", sleepData, userRepo).length).to.equal(0);
+    expect(sleep.determineBestSleepers("2019/06/15", sleepData, userRepo).length).to.equal(0);
   });
 
   it('Should return person with best quality sleep for the week', () => {
-    expect(sleep.determineSleepWinnerForWeek("2019/06/21", sleepData, userRepo)).to.deep.equal(["Luisa Hane"]);
+    expect(sleep.determineSleepWinnerForWeek("2019/06/15", sleepData, userRepo)).to.deep.equal(["Luisa Hane"]);
   });
 
   it('Should return all qualifying users if best quality sleep is a tie', () => {
@@ -83,16 +85,10 @@ describe.only('Sleep', function() {
   });
 
   it('Should return person with longest sleep for the day', () => {
-    expect(sleep.determineSleepHoursWinnerForDay('2019/06/21', sleepData, userRepo)).to.deep.equal(["Luisa Hane"]);
+    expect(sleep.determineSleepHoursWinnerForDay('2019/06/15', sleepData, userRepo)).to.deep.equal(["Luisa Hane"]);
   });
 
   it('Should return all qualifying users if longest sleep is a tie', () => {
-    let sleepData1 = sleepData.push({
-      "userID": 6,
-      "date": "2019/06/21",
-      "hoursSlept": 9,
-      "sleepQuality": 4
-    })
-    expect(sleep.determineSleepHoursWinnerForDay('2019/06/21', sleepData, userRepo)).to.deep.equal(["Jerrold Bogisich"]);
+    expect(sleep.determineSleepHoursWinnerForDay('2019/06/15', sleepData, userRepo)).to.deep.equal(["Luisa Hane"]);
   });
 });
