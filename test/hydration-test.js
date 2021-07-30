@@ -1,21 +1,23 @@
 import {
   expect
 } from 'chai';
+
 import Hydration from '../src/Hydration';
 import UserRepo from '../src/User-repo';
-import User from '../src/User';
+
 import {
   hydrationData
 } from '../src/data/sampleData';
+
 import {
   userData
 } from '../src/data/users.js';
 
-describe('Hydration', () => {
+describe.only('Hydration', () => {
   let hydration;
 
   beforeEach(() => {
-    hydration = new Hydration(hydrationData);
+    hydration = new Hydration(hydrationData[0]);
   });
 
   it('Should be a function', () => {
@@ -27,7 +29,7 @@ describe('Hydration', () => {
   })
 
   it('Should take in user id', () => {
-    expect(hydration.userID).to.equal(1);
+    expect(hydration.userID).to.equal(hydrationData[0].userID);
   });
 
   it('Should have a date', () => {
