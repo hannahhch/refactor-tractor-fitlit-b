@@ -16,13 +16,15 @@ class Activity {
     let userActivityByDate = activityData.find(data => this.userID === data.userID && date === data.date);
     return userActivityByDate.minutesActive;
   }
-  calculateActiveAverageForWeek(id, date, userRepo) {
-    return parseFloat((userRepo.getWeekFromDate(date, id, this.activityData).reduce((acc, elem) => {
+
+  calculateActiveAverageForWeek(activityData, date, userRepo) {
+    return parseFloat((userRepo.getWeekFromDate(date, this.userID, activityData).reduce((acc, elem) => {
       return acc += elem.minutesActive;
     }, 0) / 7).toFixed(1));
   }
-  accomplishStepGoal(id, date, userRepo) {
-    let userStepsByDate = this.activityData.find(data => id === data.userID && date === data.date);
+
+  accomplishStepGoal(activityData, date, userRepo) {
+    let userStepsByDate = activityData.find(data => this.userID === data.userID && date === data.date);
     if (userStepsByDate.numSteps === userRepo.dailyStepGoal) {
       return true;
     }
