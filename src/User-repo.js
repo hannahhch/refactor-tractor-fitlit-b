@@ -4,7 +4,8 @@ class UserRepo {
   }
 
   getDataFromID(id) {
-    return this.users.find((user) => id === user.id).id;
+    let result = this.users.find((user) => id === user.id);
+    return result
   }
 
   getDataFromUserID(id, dataSet) {

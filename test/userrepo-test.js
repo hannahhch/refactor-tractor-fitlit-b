@@ -38,7 +38,7 @@ describe.only('User Repo', () => {
   });
 
   it('Should return user data when given user ID', () => {
-    expect(userRepo.getDataFromID(1)).to.eql(userData[0].id);
+    expect(userRepo.getDataFromID(1)).to.deep.equal(userData[0]);
   });
 
   it('Should return the average of all users step goals', () => {
@@ -70,7 +70,7 @@ describe.only('User Repo', () => {
   });
 
   it('Should isolate a user ID and its values of any relevant data', () => {
-    expect(userRepo.isolateUsernameAndRelevantData(sleepData, "2019/06/21", 'sleepQuality', userRepo.chooseWeekDataForAllUsers(sleepData, "2019/06/21"))).to.eql({
+    expect(userRepo.isolateUsernameAndRelevantData(sleepData, "2019/06/21", 'sleepQuality', userRepo.chooseWeekDataForAllUsers(sleepData, "2019/06/21"))).to.deep.equal({
       '1': [2.2, 3.8, 2.6, 3.1, 1.2, 1.2, 4.2]
     })
   });
