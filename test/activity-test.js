@@ -63,22 +63,21 @@ describe.only('Activity', () => {
     expect(activity.calculateActiveAverageForWeek(activityData, "2019/06/21", userRepo)).to.equal(171.1);
   });
 
-  it('Should return true/false if the given user met their step goal on a given day', function() {
+  it('Should return true/false if the given user met their step goal on a given day', () => {
     expect(activity.accomplishStepGoal(activityData, "2019/06/15", userRepo.users[0])).to.equal(false);
   });
-  //   it('should return all days that a given user exceeded their step goal', function() {
-  //     expect(activity.getDaysGoalExceeded(1, userRepo.users[0])).to.eql([
-  //       "2019/06/17",
-  //       "2019/06/19",
-  //       "2019/06/20",
-  //       "2019/06/21",
-  //       "2019/06/22",
-  //       "2019/06/23"
-  //     ]);
-  //   });
-  //   it('should return the highest number of stairs climbed in a day for all time', function() {
-  //     expect(activity.getStairRecord(11)).to.eql(33);
-  //   });
+
+  it('should return all days that a given user exceeded their step goal', () => {
+    expect(activity.getDaysGoalExceeded(activityData, userRepo.users[0])).to.deep.equal([
+      '2019/06/17',
+      '2019/06/20'
+    ]);
+  });
+
+  it('Should return the highest number of stairs climbed in a day for all time', () => {
+    expect(activity.getStairRecord(activityData)).to.equal(36);
+  });
+
   //
   //   it('should return the average flight of stairs for all users on given day', function() {
   //     expect(activity.getAllUserAverageForDay("2019/06/15", userRepo, "flightsOfStairs")).to.eql(21.2)
