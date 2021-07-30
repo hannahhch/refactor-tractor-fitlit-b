@@ -14,7 +14,7 @@ import {
 } from '../src/data/users.js';
 
 
-describe.only('Sleep', function() {
+describe.only('Sleep', () => {
   let sleep, users, userRepo
 
   beforeEach(() => {
