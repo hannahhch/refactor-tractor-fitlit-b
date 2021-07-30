@@ -39,16 +39,18 @@ class Activity {
     return activityData.filter(data => this.userID === data.userID).reduce((acc, elem) => (elem.flightsOfStairs > acc) ? elem.flightsOfStairs : acc, 0);
   }
 
-  getAllUserAverageForDay(date, userRepo, relevantData) {
-    let selectedDayData = userRepo.chooseDayDataForAllUsers(this.activityData, date);
+  getAllUserAverageForDay(activityData, date, userRepo, relevantData) {
+    let selectedDayData = userRepo.chooseDayDataForAllUsers(activityData, date);
     return parseFloat((selectedDayData.reduce((acc, elem) => acc += elem[relevantData], 0) / selectedDayData.length).toFixed(1));
   }
-  userDataForToday(id, date, userRepo, relevantData) {
-    let userData = userRepo.getDataFromUserID(id, this.activityData);
+
+  userDataForToday(activityData, date, userRepo, relevantData) {
+    let userData = userRepo.getDataFromUserID(this.userID, activityData);
     return userData.find(data => data.date === date)[relevantData];
   }
-  userDataForWeek(id, date, userRepo, releventData) {
-    return userRepo.getWeekFromDate(date, id, this.activityData).map((data) => `${data.date}: ${data[releventData]}`);
+
+  userDataForWeek(activityData, date, userRepo, releventData) {
+    return userRepo.getWeekFromDate(date, this.userID, activityData).map((data) => `${data.date}: ${data[releventData]}`);
   }
 
   // Friends
