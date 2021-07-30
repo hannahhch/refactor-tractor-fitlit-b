@@ -51,12 +51,13 @@ describe.only('Activity', () => {
     expect(activity.flightsOfStairs).to.equal(activityData[0].flightsOfStairs);
   });
 
-  //   it('should return the miles a given user has walked on a given date', function() {
-  //     expect(activity.getMilesFromStepsByDate(1, "2019/06/15", userRepo.users[0])).to.eql(2.9);
-  //   });
-  //   it('should return the number of minutes a given user was active for on a given day', function() {
-  //     expect(activity.getActiveMinutesByDate(1, "2019/06/16")).to.eql(12);
-  //   });
+  it('Should return the miles a given user has walked on a given date', () => {
+    expect(activity.getMilesFromStepsByDate(activityData, "2019/06/15", userRepo.users[0])).to.equal(2.9);
+  });
+
+  it('Should return the number of minutes a given user was active for on a given day', () => {
+    expect(activity.getActiveMinutesByDate(activityData, "2019/06/16")).to.equal(175);
+  });
   //   it('should return average active minutes in a given week', function() {
   //     expect(activity.calculateActiveAverageForWeek(1, "2019/06/21", userRepo)).to.eql(40.4);
   //   });

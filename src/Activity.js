@@ -6,12 +6,14 @@ class Activity {
     this.minutesActive = activityData.minutesActive;
     this.flightsOfStairs = activityData.flightsOfStairs;
   }
-  getMilesFromStepsByDate(id, date, userRepo) {
-    let userStepsByDate = this.activityData.find(data => id === data.userID && date === data.date);
+
+  getMilesFromStepsByDate(activityData, date, userRepo) {
+    let userStepsByDate = activityData.find(data => this.userID === data.userID && date === data.date);
     return parseFloat(((userStepsByDate.numSteps * userRepo.strideLength) / 5280).toFixed(1));
   }
-  getActiveMinutesByDate(id, date) {
-    let userActivityByDate = this.activityData.find(data => id === data.userID && date === data.date);
+
+  getActiveMinutesByDate(activityData, date) {
+    let userActivityByDate = activityData.find(data => this.userID === data.userID && date === data.date);
     return userActivityByDate.minutesActive;
   }
   calculateActiveAverageForWeek(id, date, userRepo) {
